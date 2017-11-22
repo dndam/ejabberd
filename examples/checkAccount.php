@@ -1,7 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dan
- * Date: 23/11/2017
- * Time: 00:01
- */
+
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Ejabberd\Rest\Client;
+
+$client = new Client();
+$client->doSmth();
+
+
+
+// Option resolver din Symfony

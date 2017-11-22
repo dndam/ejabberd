@@ -2,7 +2,11 @@
   "name": "dndam/ejabberd",
   "type": "library",
   "description": "Ejabberd implementation using REST API",
-  "keywords": ["rest","ejabberd","api"],
+  "keywords": [
+    "rest",
+    "ejabberd",
+    "api"
+  ],
   "homepage": "https://github.com/dndam/ejabberd",
   "license": "MIT",
   "authors": [
@@ -20,10 +24,8 @@
     "guzzlehttp/guzzle": "^6.3"
   },
   "autoload": {
-    "autoload": {
-      "psr-4": {
-        "Ejabberd\\Rest\\": "src/"
-      }
+    "psr-4": {
+      "Ejabberd\\Rest\\": "src/"
     }
   }
 }

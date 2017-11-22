@@ -6,7 +6,8 @@ Ejabberd already offered a XML RPC, but according to their documentation this wi
   
 ### Installation
 ```bash
-composer require dndam/ejabberd
+composer require dndam/ejabberd  
+composer install
 ```
 
 ### Usage
