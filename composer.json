@@ -1,0 +1,26 @@
+{
+  "name": "dndam/ejabberd",
+  "type": "library",
+  "description": "Ejabberd implementation using REST API",
+  "keywords": ["rest","ejabberd","api"],
+  "homepage": "https://github.com/dndam/ejabberd",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dan Damian",
+      "email": "damian.dan@me.com",
+      "homepage": "http://life.ontherun.ro",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "autoload": {
+    "autoload": {
+      "psr-4": {
+        "dndam\\Ejabberd\\": "src/dndam/Ejabberd/"
+      }
+    }
+  }
+}
