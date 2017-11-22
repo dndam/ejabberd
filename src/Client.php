@@ -1,7 +1,18 @@
 <?php
+
+namespace Ejabberd\Rest;
+
+use GuzzleHttp\Client as GuzzleHttpClient;
+
 /**
- * Created by PhpStorm.
- * User: dan
- * Date: 22/11/2017
- * Time: 23:12
+ * Ejabberd XMPP connection client
+ *
+ * @package Ejabberd\Rest
  */
+class Client {
+
+    public function __construct()
+    {
+    }
+
+}
