@@ -9,7 +9,11 @@ use GuzzleHttp\Client as GuzzleHttpClient;
  *
  * @package Ejabberd\Rest
  */
-class Client {
+class Client
+{
+
+    use Traits\User;
+    use Traits\Service;
 
     /**
      * @var GuzzleHttpClient
@@ -19,37 +23,49 @@ class Client {
     /**
      * @var string
      */
-    protected $url;
+    protected $apiUrl;
 
-    public function __construct()
+    public function __construct(array $options)
     {
-        // Config ? uri, port? logger?
+        $this->checkConfigParameters($options);
+
         $this->client = new GuzzleHttpClient([
-            'base_uri' => $this->url
+            'base_uri' => $this->apiUrl
         ]);
     }
 
-    public function callUser($entity, $payload)
+    /**
+     * Check mandatory configuration parameters
+     *
+     */
+    protected function checkConfigParameters($options)
     {
-        // Indian style
-        // Factory: no autocomplete
-        // Proxy: No autocomplete
-        // Traits:
-        try{
-            $response = $this->client->post('api/check_account', ['json' => ['user' => $user, 'host' => $this->config['domain']]])
-        }catch (\Exception $exception)
-        {
-            //Log ?
-            throw new \RuntimeException();
+        // ToDo: Use OptionsResolver from Symfony: https://symfony.com/doc/current/components/options_resolver.html
+        if (!isset($options['apiUrl'])) {
+            throw new \InvalidArgumentException("Parameter 'apiUrl' is not specified");
         }
 
-        return $response->getBody();
+        $this->apiUrl = $options['apiUrl'];
     }
 
-    public function doSmth ()
+    /**
+     * Sends the call to the Ejabberd REST API, with a payload
+     *
+     * @param $endPoint
+     * @param $payload
+     * @return mixed
+     */
+    protected function sendRequest($endPoint, $payload)
     {
-        echo "essi";
+        try {
+            $response = $this->client->post($endPoint, ['json' => $payload]);
+            //$response = $this->client->post('api/check_account', ['json' => ['user' => $user, 'host' => $this->config['domain']]])
+        } catch (\Exception $exception) {
+            //Log ?
+            throw new \RuntimeException($exception->getMessage());
+        }
 
+        // ToDo: Check that we have a response body ($response->getCode())
+        return \GuzzleHttp\json_decode($response->getBody(), true);
     }
-
 }

@@ -23,7 +23,17 @@ use Ejabberd\Rest;
 ```
 
 ### Examples
-```php
+```bash
+php examples/checkStatus.php
 
 ```  
+More examples are placed under **/examples** folder
+
+## Disclaimer
+When started with this wrapper, I was surprised by the lack (or active) support within PHP for XMPP. Most of the libraries were RPC based, which Ejabberd claim to drop its support.  
+For this, based on small talks ... arrived to three possibilities:
+1. The https://github.com/cloudadic/php-ejabberd style, but their code was the one that started me with this project
+2. A Factory pattern, but for someone that is not used with Ejabberd server it' hard to work with and no autocompletion within IDE
+3. Proxy: Same as above: no autocomplete
+4. Traits: Winner! A lot of wrappers, a lot of methods but we should split them in traits and reuse what we can reuse
 
