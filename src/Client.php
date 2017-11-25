@@ -25,6 +25,11 @@ class Client
      */
     protected $apiUrl;
 
+    /**
+     * @var string
+     */
+    protected $host;
+
     public function __construct(array $options)
     {
         $this->checkConfigParameters($options);
@@ -45,7 +50,12 @@ class Client
             throw new \InvalidArgumentException("Parameter 'apiUrl' is not specified");
         }
 
+        if (!isset($options['host'])) {
+            throw new \InvalidArgumentException("Parameter 'host' is not specified");
+        }
+
         $this->apiUrl = $options['apiUrl'];
+        $this->host = $options['host'];
     }
 
     /**
