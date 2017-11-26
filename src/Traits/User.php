@@ -28,17 +28,17 @@ trait User
     /**
      * Creates a user account
      *
-     * @param string $email
+     * @param string $accountName
      * @param $password
      * @return mixed
      * @internal param string $param
      */
-    public function createAccount($email, $password)
+    public function createAccount($accountName, $password)
     {
         $response = $this->sendRequest(
             'register',
             [
-                "user" => $email,
+                "user" => $accountName,
                 "password" => $password,
                 "host" => $this->host
             ]

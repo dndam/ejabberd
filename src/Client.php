@@ -69,7 +69,6 @@ class Client
     {
         try {
             $response = $this->client->post($endPoint, ['json' => $payload]);
-            //$response = $this->client->post('api/check_account', ['json' => ['user' => $user, 'host' => $this->config['domain']]])
         } catch (\Exception $exception) {
             //Log ?
             throw new \RuntimeException($exception->getMessage());

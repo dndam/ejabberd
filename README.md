@@ -16,18 +16,33 @@ composer install
   
 require __DIR__ . '/vendor/autoload.php';
   
-use Ejabberd\Rest;
-
-
-
+use Ejabberd\Rest;  
+$client = new Client([
+    'apiUrl' => 'http://127.0.0.1:5280/api/',
+    'host' => 'chat.example.com'
+    ]);
 ```
 
 ### Examples
+```php
+// Add User
+$user = 'mumu';
+$password = '123'
+$client->createAccount($user, $password);
+  
+// Add a second User
+$user = 'mumu-friend';
+$password = '123'
+$client->createAccount($user, $password);
+  
+// Add Roster between the two
+
+```
+More examples are placed under **/examples** folder
 ```bash
 php examples/checkStatus.php
 
 ```  
-More examples are placed under **/examples** folder
 
 ## Disclaimer
 When started with this wrapper, I was surprised by the lack (or active) support within PHP for XMPP. Most of the libraries were RPC based, which Ejabberd claim to drop its support.  

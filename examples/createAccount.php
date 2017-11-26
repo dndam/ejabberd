@@ -8,4 +8,4 @@ $client = new Client([
     'apiUrl' => 'http://127.0.0.1:5280/api/',
     'host' => 'chat.example.com'
     ]);
-$client->createAccount('123', "123456789asd");
+var_dump($client->createAccount('a12341231231dasdasd', "123456789asd"));
