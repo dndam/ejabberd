@@ -13,6 +13,7 @@ class Client
 {
 
     use Traits\User;
+    use Traits\Roster;
     use Traits\Service;
 
     /**
