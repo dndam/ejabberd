@@ -36,6 +36,7 @@ $password = '123'
 $client->createAccount($user, $password);
   
 // Add Roster between the two
+$client->addRosterItem('Nick', "Joe"));
 
 ```
 More examples are placed under **/examples** folder
