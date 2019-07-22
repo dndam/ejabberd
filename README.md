@@ -32,7 +32,7 @@ $client->createAccount($user, $password);
   
 // Add a second User
 $user = 'mumu-friend';
-$password = '123'
+$password = '123';
 $client->createAccount($user, $password);
   
 // Add Roster between the two
