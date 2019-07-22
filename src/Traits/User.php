@@ -18,7 +18,7 @@ trait User
             'check_account',
             [
                 'user' => $user,
-//                'host' => $this->host
+                'host' => $this->host
             ]
         );
 
