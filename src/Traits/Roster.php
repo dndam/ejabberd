@@ -41,7 +41,7 @@ trait Roster
     public function removeRosterItem($user1, $user2)
     {
         $response = $this->sendRequest(
-            'add_rosteritem',
+            'delete_rosteritem',
             [
                 "localuser" => $user1,
                 "localserver" => $this->host,
