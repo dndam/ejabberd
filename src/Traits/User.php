@@ -46,4 +46,21 @@ trait User
 
         return $response == 0;
     }
+
+    /**
+     * @param string $accountName
+     * @return int
+     */
+    public function getOfflineCount($accountName)
+    {
+        $response = $this->sendRequest(
+            'get_offline_count',
+            [
+                "user" => $accountName,
+                "server" => $this->host
+            ]
+        );
+
+        return $response == 0;
+    }
 }
