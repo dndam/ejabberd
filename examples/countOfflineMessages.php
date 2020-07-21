@@ -6,6 +6,7 @@ use Ejabberd\Rest\Client;
 
 $client = new Client([
     'apiUrl' => 'http://127.0.0.1:5443/api/',
-    'host' => 'chat.example.com'
+    'host' => 'http://chat.example.com/'
     ]);
-var_dump($client->createAccount('a12341231231dasdasd', "123456789asd"));
+
+var_dump($client->getOfflineCount('admin'));

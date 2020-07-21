@@ -61,6 +61,23 @@ trait User
             ]
         );
 
-        return $response == 0;
+        return $response['value'];
+    }
+
+    /**
+     * @param string $accountName
+     * @return mixed
+     */
+    public function getLastActivity($accountName)
+    {
+        $response = $this->sendRequest(
+            'get_last',
+            [
+                "user" => $accountName,
+                "server" => $this->host
+            ]
+        );
+
+        return $response;
     }
 }
