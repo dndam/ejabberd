@@ -74,7 +74,7 @@ trait User
             'get_last',
             [
                 "user" => $accountName,
-                "server" => $this->host
+                "host" => $this->host
             ]
         );
 
