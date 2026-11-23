@@ -5,51 +5,67 @@ namespace Ejabberd\Rest\Traits;
 trait Roster
 {
     /**
-     * Creates a chat relation between two accounts
-     *
-     * @param string $user1
-     * @param string $user2
-     * @return mixed
-     * @internal param string $param
+     * ejabberd 26.09 (v1) requires localhost, host and groups (array).
+     * Existing two-argument calls remain supported.
      */
-    public function addRosterItem($user1, $user2)
+    public function addRosterItem($user1, $user2, $nick = null, array $groups = ['Friends'], $subscription = 'both')
     {
-        $response = $this->sendRequest(
-            'add_rosteritem',
-            [
-                "localuser" => $user1,
-                "localserver" => $this->host,
-                "user" => $user2,
-                "server" => $this->host,
-                "nick" => $user2,
-                "group" => "Friends",
-                "subs" => "both"
-            ]
-        );
-
-        return $response == 0;
+        return $this->commandSucceeded($this->sendRequest('add_rosteritem', [
+            'localuser' => $user1,
+            'localhost' => $this->host,
+            'user' => $user2,
+            'host' => $this->host,
+            'nick' => $nick === null ? $user2 : $nick,
+            'groups' => $groups,
+            'subs' => $subscription,
+        ]));
     }
 
-    /**
-     * Removes a chat relation between two accounts
-     *
-     * @param string $user1
-     * @param string $user2
-     * @return mixed
-     * @internal param string $param
-     */
     public function removeRosterItem($user1, $user2)
     {
-        $response = $this->sendRequest(
-            'delete_rosteritem',
-            [
-                "localuser" => $user1,
-                "localserver" => $this->host,
-                "user" => $user2,
-                "server" => $this->host
-            ]
-        );
+        return $this->commandSucceeded($this->sendRequest('delete_rosteritem', [
+            'localuser' => $user1,
+            'localhost' => $this->host,
+            'user' => $user2,
+            'host' => $this->host,
+        ]));
+    }
 
-        return $response == 0;
+    /** @return array Contacts from the ejabberd REST get_roster command. */
+    public function getRoster($user)
+    {
+        $contacts = $this->sendRequest('get_roster', [
+            'user' => $user, 'host' => $this->host,
+        ]);
+        if (!is_array($contacts)) {
+            throw new \RuntimeException('Unexpected get_roster response');
+        }
+        return $contacts;
+    }
+
+    /** Ensure both users see each other as subscribed contacts; repeatable safely. */
+    public function ensureMutualRoster($patient, $physician)
+    {
+        if ($patient === $physician) {
+            throw new \InvalidArgumentException('Roster pair must contain two different users');
+        }
+        $this->ensureRosterDirection($patient, $physician, ['Medical Team']);
+        $this->ensureRosterDirection($physician, $patient, ['Patients']);
+        return true;
+    }
+
+    protected function ensureRosterDirection($owner, $contact, array $groups)
+    {
+        $jid = strtolower($contact . '@' . $this->host);
+        foreach ($this->getRoster($owner) as $item) {
+            if (isset($item['jid'], $item['subscription']) &&
+                strtolower($item['jid']) === $jid &&
+                strtolower($item['subscription']) === 'both') {
+                return;
+            }
+        }
+        if (!$this->addRosterItem($owner, $contact, $contact, $groups, 'both')) {
+            throw new \RuntimeException('Cannot ensure roster for ' . $owner . ' -> ' . $contact);
+        }
     }
 }
