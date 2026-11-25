@@ -63,4 +63,23 @@ trait User
             'user' => $accountName, 'host' => $this->host,
         ]);
     }
+
+    /**
+     * Change an existing XMPP account password.
+     *
+     * @return bool
+     */
+    public function changePassword($accountName, $newPassword)
+    {
+        $response = $this->sendRequest(
+            'change_password',
+            [
+                'user' => (string) $accountName,
+                'host' => $this->host,
+                'newpass' => $newPassword,
+            ]
+        );
+    
+        return $response === 0;
+    }
 }
